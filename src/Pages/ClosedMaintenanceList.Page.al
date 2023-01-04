@@ -8,6 +8,7 @@ page 50034 "Closed Maintenance List"
     SourceTableView = WHERE(Status = FILTER(Close));
     ApplicationArea = all;
     UsageCategory = Lists;
+    //
 
     layout
     {
