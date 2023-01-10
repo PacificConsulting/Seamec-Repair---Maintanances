@@ -1,7 +1,8 @@
-page 50006 "Job Component Lines"
+page 50071 "Job Component Lines"
 {
     PageType = ListPart;
-    SourceTable = 50000;
+    SourceTable = 50031;
+
 
 
     layout

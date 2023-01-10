@@ -1,9 +1,12 @@
-page 50054 "Job Maintenance List"
+page 50078 "Job Maintenance List"
 {
     CardPageID = "Repair & Maint. Job Card";
     Editable = false;
     PageType = List;
-    SourceTable = 50016;
+    SourceTable = 50032;
+    ApplicationArea = all;
+    UsageCategory = Lists;
+
 
     layout
     {

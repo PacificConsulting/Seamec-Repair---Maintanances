@@ -1,4 +1,4 @@
-table 50016 "Maintenance Header"
+table 50032 "Maintenance Header"
 {
     Caption = 'Maintenance Header';
 
@@ -322,7 +322,7 @@ table 50016 "Maintenance Header"
         FASetup: Record 5603;
         recFA: Record 5600;
         Vendor: Record 23;
-        PreventiveMaintenanceMaster: Record 50053;
+        PreventiveMaintenanceMaster: Record 50035;
         DimMgt: Codeunit 408;
 }
 

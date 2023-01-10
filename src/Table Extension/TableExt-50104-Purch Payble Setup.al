@@ -6,8 +6,11 @@ tableextension 50104 "Purch.Payable setup" extends "Purchases & Payables Setup"
         {
             DataClassification = ToBeClassified;
         }
+        field(50051; "Requisition No Series"; code[10])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
-    var
-        myInt: Integer;
+
 }

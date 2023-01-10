@@ -1,11 +1,13 @@
-page 50208 "Preventive Maintenance Master"
+page 50084 "Preventive Maintenance Master"
 {
     AutoSplitKey = true;
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = List;
-    SourceTable = 50053;
+    SourceTable = 50035;
+    ApplicationArea = all;
+    UsageCategory = Lists;
 
     layout
     {
@@ -69,6 +71,6 @@ page 50208 "Preventive Maintenance Master"
     }
 
     var
-        PreventiveMaintenanceMaster: Record 50053;
+        PreventiveMaintenanceMaster: Record 50035;
 }
 

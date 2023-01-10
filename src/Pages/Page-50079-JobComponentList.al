@@ -1,8 +1,8 @@
-page 50055 "Job Component List"
+page 50079 "Job Component List"
 {
     CardPageID = "Job Component Card";
     PageType = List;
-    SourceTable = 50036;
+    SourceTable = 50034;
     ApplicationArea = all;
     UsageCategory = lists;
 

@@ -1,9 +1,9 @@
-page 50033 "Repair & Maint. Consumables"
+page 50074 "Repair & Maint. Consumables"
 {
     AutoSplitKey = true;
     Caption = 'Repair & Maint. Consumables';
     PageType = ListPart;
-    SourceTable = 50021;
+    SourceTable = 50033;
     SourceTableView = WHERE("Component Type" = FILTER(Item | ' '));
 
     layout
@@ -14,33 +14,43 @@ page 50033 "Repair & Maint. Consumables"
             {
                 field("Component Type"; rec."Component Type")
                 {
+                    ApplicationArea = all;
                 }
                 field("Consumable Component"; rec."Consumable Component")
                 {
+                    ApplicationArea = all;
                 }
                 field(Remarks; rec.Remarks)
                 {
+                    ApplicationArea = all;
                 }
                 field(Description; rec.Description)
                 {
+                    ApplicationArea = all;
                 }
                 field(Quantity; rec.Quantity)
                 {
+                    ApplicationArea = all;
                 }
                 field("Location Code"; rec."Location Code")
                 {
+                    ApplicationArea = all;
                 }
                 field("Bin Code"; rec."Bin Code")
                 {
+                    ApplicationArea = all;
                 }
                 field("Inventory  Qty"; rec."Inventory  Qty")
                 {
+                    ApplicationArea = all;
                 }
                 field("Quantity Utilized"; rec."Quantity Utilized")
                 {
+                    ApplicationArea = all;
                 }
                 field("Req no."; rec."Req no.")
                 {
+                    ApplicationArea = all;
                 }
             }
         }
@@ -58,6 +68,7 @@ page 50033 "Repair & Maint. Consumables"
                 {
                     Caption = 'Item Availability by';
                     Image = ItemAvailability;
+
                 }
                 action(ItemTrackingLines)
                 {
@@ -65,6 +76,7 @@ page 50033 "Repair & Maint. Consumables"
                     Image = ItemTrackingLines;
                     ShortCutKey = 'Shift+Ctrl+I';
                     Visible = false;
+                    ApplicationArea = all;
 
                     trigger OnAction()
                     begin
@@ -89,7 +101,7 @@ page 50033 "Repair & Maint. Consumables"
     end;
 
     var
-        MaintenanceHeader: Record 50016;
+        MaintenanceHeader: Record 50032;
         vEdit: Boolean;
 }
 

@@ -1,7 +1,7 @@
-table 50000 "Component Lines"
+table 50031 "Component Lines"
 {
-    DrillDownPageID = 50006;
-    LookupPageID = 50006;
+    DrillDownPageID = 50071;
+    LookupPageID = 50071;
 
     fields
     {

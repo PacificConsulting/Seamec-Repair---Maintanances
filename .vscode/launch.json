@@ -2,20 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Your own server",
+            "name": "Microsoft cloud sandbox",
             "request": "launch",
             "type": "al",
-            "environmentType": "OnPrem",
-            "server": "http://localhost:8080/BC200",
-            "serverInstance": "BC200",
-            "authentication": "Windows",
+            "environmentType": "Sandbox",
+            "environmentName": "SeamecSandbox",
+            "tenant": "a9f3ea0c-8063-42f9-891d-8d81b667b2d0",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
-            "tenant": "default"
+            "schemaUpdateMode": "ForceSync"
         }
     ]
 }

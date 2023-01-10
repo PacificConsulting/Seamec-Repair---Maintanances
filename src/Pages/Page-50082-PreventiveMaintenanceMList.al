@@ -1,7 +1,9 @@
-page 50209 "Preventive Maintenance M List"
+page 50082 "Preventive Maintenance M List"
 {
     PageType = List;
-    SourceTable = 50053;
+    SourceTable = 50035;
+    ApplicationArea = all;
+    UsageCategory = Lists;
 
     layout
     {

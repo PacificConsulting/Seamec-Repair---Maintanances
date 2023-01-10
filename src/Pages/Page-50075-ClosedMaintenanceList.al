@@ -1,10 +1,10 @@
-page 50034 "Closed Maintenance List"
+page 50075 "Closed Maintenance List"
 {
     CardPageID = "Repair & Maint. Job Card";
     DeleteAllowed = false;
     InsertAllowed = false;
     PageType = List;
-    SourceTable = 50016;
+    SourceTable = 50032;
     SourceTableView = WHERE(Status = FILTER(Close));
     ApplicationArea = all;
     UsageCategory = Lists;

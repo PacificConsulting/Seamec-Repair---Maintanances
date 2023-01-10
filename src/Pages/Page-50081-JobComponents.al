@@ -1,7 +1,7 @@
-page 50057 "Job Components"
+page 50081 "Job Components"
 {
     PageType = List;
-    SourceTable = 50000;
+    SourceTable = 50031;
     ApplicationArea = all;
     UsageCategory = lists;
 

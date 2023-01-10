@@ -1,7 +1,7 @@
-table 50053 "Preventive Maintenance Master"
+table 50035 "Preventive Maintenance Master"
 {
-    DrillDownPageID = 50208;
-    LookupPageID = 50208;
+    //DrillDownPageID = 50208;
+    //LookupPageID = 50208;
 
     fields
     {
@@ -120,6 +120,6 @@ table 50053 "Preventive Maintenance Master"
 
     var
         FixedAsset: Record 5600;
-        PreventiveMaintenanceMaster: Record 50053;
+        PreventiveMaintenanceMaster: Record 50035;
 }
 

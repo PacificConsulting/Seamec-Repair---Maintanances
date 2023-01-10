@@ -1,4 +1,4 @@
-table 50036 "Job Component Header"
+table 50034 "Job Component Header"
 {
     Caption = 'Maintenance Header';
 
@@ -180,7 +180,7 @@ table 50036 "Job Component Header"
         FASetup: Record 5603;
         recFA: Record 5600;
         Vendor: Record 23;
-        PreventiveMaintenanceMaster: Record 50053;
+        PreventiveMaintenanceMaster: Record 50035;
 
 
 

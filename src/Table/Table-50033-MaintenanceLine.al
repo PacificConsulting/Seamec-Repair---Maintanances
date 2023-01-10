@@ -1,4 +1,4 @@
-table 50021 "Maintenance Line"
+table 50033 "Maintenance Line"
 {
 
     fields
@@ -201,18 +201,20 @@ table 50021 "Maintenance Line"
         WarehouseEntry: Record 7312;
         vBinQty: Decimal;
         ReserveItemJnlLine: Codeunit 99000835;
-        MaintenanceHeader: Record 50016;
-        MaintenanceHeader1: record 50016;
+        MaintenanceHeader: Record 50032;
+        MaintenanceHeader1: record 50032;
         Item: Record 27;
         GLAccount: Record 15;
         FixedAsset: Record 5600;
         Resource: Record 156;
         Vendor: Record 23;
+        ItemReserve: Codeunit 50020;
 
     //[Scope('Internal')]
     procedure OpenItemTrackingLines(IsReclass: Boolean)
     begin
-        ReserveItemJnlLine.CallItemTrackingML(Rec, IsReclass);
+        //ReserveItemJnlLine.CallItemTrackingML(Rec, IsReclass); //PCPL/NSW/07 New Below Code add
+        ItemReserve.CallItemTrackingML(Rec, IsReclass);
     end;
 }
 

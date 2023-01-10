@@ -1,10 +1,10 @@
-page 50219 "Maintenance Manpower Used"
+page 50077 "Maintenance FA SubPage"
 {
     AutoSplitKey = true;
-    Caption = 'Maintenance Manpower Used';
+    Caption = 'Job task FA Line';
     PageType = ListPart;
-    SourceTable = 50021;
-    SourceTableView = WHERE("Component Type" = FILTER(Resource));
+    SourceTable = 50033;
+    SourceTableView = WHERE("Component Type" = FILTER(FA));
 
     layout
     {
@@ -14,26 +14,27 @@ page 50219 "Maintenance Manpower Used"
             {
                 field("Component Type"; rec."Component Type")
                 {
+                    ApplicationArea = all;
                 }
-                field("Resource Utilized"; rec."Consumable Component")
+                field("Consumable Component"; rec."Consumable Component")
                 {
+                    ApplicationArea = all;
                 }
                 field(Remarks; rec.Remarks)
                 {
+                    ApplicationArea = all;
                 }
                 field(Description; rec.Description)
                 {
+                    ApplicationArea = all;
                 }
-                field("Hours Utilized"; rec.Quantity)
+                field(Quantity; rec.Quantity)
                 {
-                }
-                field("Unit Cost"; rec."Unit Cost")
-                {
-                    Visible = True;//Visibility;
+                    ApplicationArea = all;
                 }
                 field("Location Code"; rec."Location Code")
                 {
-                    Visible = false;
+                    ApplicationArea = all;
                 }
             }
         }
@@ -68,19 +69,5 @@ page 50219 "Maintenance Manpower Used"
             }
         }
     }
-
-    trigger OnAfterGetRecord()
-    begin
-
-        UserSetup.GET(USERID);
-        // IF UserSetup."Hide Resource Cost" THEN BEGIN
-        //     Visibility := FALSE
-        // END ELSE
-        //     Visibility := TRUE;
-    end;
-
-    var
-        UserSetup: Record 91;
-        Visibility: Boolean;
 }
 

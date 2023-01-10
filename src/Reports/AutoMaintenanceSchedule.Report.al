@@ -175,13 +175,13 @@ report 50011 "Auto Maintenance Schedule"
     }
 
     var
-        JobComponentHeader: Record 50036;
-        MaintenanceHeader: Record 50016;
-        MaintenanceLine: Record 50021;
+        JobComponentHeader: Record 50034;
+        MaintenanceHeader: Record 50032;
+        MaintenanceLine: Record 50033;
         vJobDate: Date;
         NoSeriesMgt: Codeunit 396;
         FASetup: Record 5603;
-        ComponentList: Record 50000;
+        ComponentList: Record 50031;
         vlineno: Integer;
         vSChDate: Date;
         vMainDate: Date;

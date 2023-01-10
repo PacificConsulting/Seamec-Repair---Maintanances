@@ -1,10 +1,12 @@
-page 50028 "Repair & Maint. Job List"
+page 50072 "Repair & Maint. Job List"
 {
     CardPageID = "Repair & Maint. Job Card";
     ModifyAllowed = false;
     PageType = List;
-    SourceTable = 50016;
+    SourceTable = 50032;
     SourceTableView = WHERE(Status = FILTER("Under Maintenance"));
+    ApplicationArea = all;
+    UsageCategory = Lists;
 
     layout
     {

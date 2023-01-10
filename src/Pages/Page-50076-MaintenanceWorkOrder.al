@@ -1,9 +1,9 @@
-page 50052 "Maintenance Work Order"
+page 50076 "Maintenance Work Order"
 {
     AutoSplitKey = true;
     Caption = 'Maintenance Work Order';
     PageType = ListPart;
-    SourceTable = 50021;
+    SourceTable = 50033;
     SourceTableView = WHERE("Component Type" = FILTER("G/L Account"));
 
     layout
@@ -14,33 +14,43 @@ page 50052 "Maintenance Work Order"
             {
                 field(Type; rec."Component Type")
                 {
+                    ApplicationArea = all;
                 }
                 field("G/L Account No."; rec."Consumable Component")
                 {
+                    ApplicationArea = all;
                 }
                 field(Remarks; rec.Remarks)
                 {
+                    ApplicationArea = all;
                 }
                 field(Description; rec.Description)
                 {
+                    ApplicationArea = all;
                 }
                 field("Charge Description"; rec."Charge Description")
                 {
+                    ApplicationArea = all;
                 }
                 field(Quantity; rec.Quantity)
                 {
+                    ApplicationArea = all;
                 }
                 field("Unit Cost"; rec."Unit Cost")
                 {
+                    ApplicationArea = all;
                 }
                 field("Location Code"; rec."Location Code")
                 {
+                    ApplicationArea = all;
                 }
                 field("Vendor No."; rec."Vendor No.")
                 {
+                    ApplicationArea = all;
                 }
                 field("Vendor Name"; rec."Vendor Name")
                 {
+                    ApplicationArea = all;
                 }
                 field("Work Order No."; rec."Work Order No.")
                 {
@@ -155,7 +165,7 @@ page 50052 "Maintenance Work Order"
         PurchaseLine: Record 39;
         NoSeriesMgt: Codeunit 396;
         vLine: Integer;
-        MaintenanceHeader: Record 50016;
-        MaintenanceLine: Record 50021;
+        MaintenanceHeader: Record 50032;
+        MaintenanceLine: Record 50033;
 }
 

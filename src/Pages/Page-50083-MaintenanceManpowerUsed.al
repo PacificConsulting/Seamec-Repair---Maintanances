@@ -1,10 +1,10 @@
-page 50053 "Maintenance FA SubPage"
+page 50083 "Maintenance Manpower Used"
 {
     AutoSplitKey = true;
-    Caption = 'Job task FA Line';
+    Caption = 'Maintenance Manpower Used';
     PageType = ListPart;
-    SourceTable = 50021;
-    SourceTableView = WHERE("Component Type" = FILTER(FA));
+    SourceTable = 50033;
+    SourceTableView = WHERE("Component Type" = FILTER(Resource));
 
     layout
     {
@@ -14,21 +14,33 @@ page 50053 "Maintenance FA SubPage"
             {
                 field("Component Type"; rec."Component Type")
                 {
+                    ApplicationArea = all;
                 }
-                field("Consumable Component"; rec."Consumable Component")
+                field("Resource Utilized"; rec."Consumable Component")
                 {
+                    ApplicationArea = all;
                 }
                 field(Remarks; rec.Remarks)
                 {
+                    ApplicationArea = all;
                 }
                 field(Description; rec.Description)
                 {
+                    ApplicationArea = all;
                 }
-                field(Quantity; rec.Quantity)
+                field("Hours Utilized"; rec.Quantity)
                 {
+                    ApplicationArea = all;
+                }
+                field("Unit Cost"; rec."Unit Cost")
+                {
+                    ApplicationArea = all;
+                    Visible = True;//Visibility;
                 }
                 field("Location Code"; rec."Location Code")
                 {
+                    Visible = false;
+                    ApplicationArea = all;
                 }
             }
         }
@@ -63,5 +75,19 @@ page 50053 "Maintenance FA SubPage"
             }
         }
     }
+
+    trigger OnAfterGetRecord()
+    begin
+
+        UserSetup.GET(USERID);
+        // IF UserSetup."Hide Resource Cost" THEN BEGIN
+        //     Visibility := FALSE
+        // END ELSE
+        //     Visibility := TRUE;
+    end;
+
+    var
+        UserSetup: Record 91;
+        Visibility: Boolean;
 }
 
