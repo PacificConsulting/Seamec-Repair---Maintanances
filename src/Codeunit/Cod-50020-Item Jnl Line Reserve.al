@@ -40,27 +40,27 @@ codeunit 50020 "Item Jnl. Line Reserve"
     begin
         TrackingSpecification.INIT;
         TrackingSpecification."Source Type" := DATABASE::"Maintenance Line";
-        WITH MaintenanceLine DO BEGIN
-            TrackingSpecification."Item No." := "Consumable Component";
-            TrackingSpecification."Location Code" := "Location Code";
-            IF recItem.GET("Consumable Component") THEN;
-            TrackingSpecification.Description := recItem.Description;
-            TrackingSpecification."Variant Code" := '';
-            TrackingSpecification."Source Subtype" := 3;
-            TrackingSpecification."Source ID" := 'ITEM';
-            TrackingSpecification."Source Batch Name" := 'DEFAULT';
-            TrackingSpecification."Source Prod. Order Line" := 0;
-            TrackingSpecification."Source Ref. No." := "Line No.";
-            TrackingSpecification."Quantity (Base)" := Quantity;
-            TrackingSpecification."Qty. to Handle" := Quantity;
-            TrackingSpecification."Qty. to Handle (Base)" := Quantity;
-            TrackingSpecification."Qty. to Invoice" := Quantity;
-            TrackingSpecification."Qty. to Invoice (Base)" := Quantity;
-            TrackingSpecification."Quantity Handled (Base)" := 0;
-            TrackingSpecification."Quantity Invoiced (Base)" := 0;
-            TrackingSpecification."Qty. per Unit of Measure" := recItem."Unit Price";
-            TrackingSpecification."Bin Code" := "Bin Code";
-        END;
+        //WITH MaintenanceLine DO BEGIN
+        TrackingSpecification."Item No." := MaintenanceLine."Consumable Component";
+        TrackingSpecification."Location Code" := MaintenanceLine."Location Code";
+        IF recItem.GET(MaintenanceLine."Consumable Component") THEN;
+        TrackingSpecification.Description := recItem.Description;
+        TrackingSpecification."Variant Code" := '';
+        TrackingSpecification."Source Subtype" := 3;
+        TrackingSpecification."Source ID" := 'ITEM';
+        TrackingSpecification."Source Batch Name" := 'DEFAULT';
+        TrackingSpecification."Source Prod. Order Line" := 0;
+        TrackingSpecification."Source Ref. No." := MaintenanceLine."Line No.";
+        TrackingSpecification."Quantity (Base)" := MaintenanceLine.Quantity;
+        TrackingSpecification."Qty. to Handle" := MaintenanceLine.Quantity;
+        TrackingSpecification."Qty. to Handle (Base)" := MaintenanceLine.Quantity;
+        TrackingSpecification."Qty. to Invoice" := MaintenanceLine.Quantity;
+        TrackingSpecification."Qty. to Invoice (Base)" := MaintenanceLine.Quantity;
+        TrackingSpecification."Quantity Handled (Base)" := 0;
+        TrackingSpecification."Quantity Invoiced (Base)" := 0;
+        TrackingSpecification."Qty. per Unit of Measure" := recItem."Unit Price";
+        TrackingSpecification."Bin Code" := MaintenanceLine."Bin Code";
+        // END;
     end;
 
 }
