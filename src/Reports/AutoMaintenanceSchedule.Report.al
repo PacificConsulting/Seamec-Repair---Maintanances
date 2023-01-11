@@ -1,4 +1,4 @@
-report 50011 "Auto Maintenance Schedule"
+report 50101 "Auto Maintenance Schedule"
 {
     ProcessingOnly = true;
 
