@@ -2,7 +2,7 @@ pageextension 50100 "Fixed Asset Card" extends 5600
 {
     layout
     {
-        // Add changes to page layout here
+
     }
 
     actions
