@@ -9,5 +9,5 @@ tableextension 50101 "FA Setup" extends "FA Setup"
     }
 
     var
-        myInt: Integer;
+    //myInt: Integer;
 }
