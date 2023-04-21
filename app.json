@@ -1,6 +1,6 @@
 {
   "id": "87d91a4c-c3eb-4610-823a-48a07fff9bc5",
-  "name": "Seamec Maintenance",
+  "name": "Seamec Repair & Maintenance",
   "publisher": "Pacific",
   "version": "1.0.0.1",
   "brief": "",
@@ -10,7 +10,14 @@
   "help": "",
   "url": "",
   "logo": "",
-  "dependencies": [],
+  "dependencies": [
+   {
+    "id": "b42afbbe-0e79-48cb-a069-79a30045806a",
+    "publisher": "Pacific",
+    "name": "Seamec Indent Extension",
+    "version": "1.0.0.1"
+   }
+  ],
   "screenshots": [],
   "platform": "1.0.0.0",
   "application": "20.0.0.0",

@@ -181,7 +181,7 @@ report 50101 "Auto Maintenance Schedule"
         vJobDate: Date;
         NoSeriesMgt: Codeunit 396;
         FASetup: Record 5603;
-        ComponentList: Record 50031;
+        ComponentList: Record 50036;
         vlineno: Integer;
         vSChDate: Date;
         vMainDate: Date;

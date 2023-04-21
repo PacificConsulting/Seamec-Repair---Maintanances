@@ -2,7 +2,7 @@ page 50073 "Repair & Maint. Job Card"
 {
     PageType = Card;
     SourceTable = 50032;
-
+    Caption = 'Repair & Maint. Job Card';
 
     layout
     {
@@ -12,7 +12,6 @@ page 50073 "Repair & Maint. Job Card"
             {
                 field("No."; rec."No.")
                 {
-
                     ApplicationArea = all;
                 }
                 field("Location Code"; rec."Location Code")
@@ -127,14 +126,14 @@ page 50073 "Repair & Maint. Job Card"
                 {
                     ApplicationArea = all;
                 }
-                field("Consumable Stockout"; rec."Consumable Stockout")
-                {
-                    ApplicationArea = all;
-                }
-                field("Hours Consumed In Stockout"; rec."Hours Consumed In Stockout")
-                {
-                    ApplicationArea = all;
-                }
+                // field("Consumable Stockout"; rec."Consumable Stockout")
+                // {
+                //     ApplicationArea = all;
+                // }
+                // field("Hours Consumed In Stockout"; rec."Hours Consumed In Stockout")
+                // {
+                //     ApplicationArea = all;
+                // }
             }
             group("Closure Of Issue")
             {
@@ -142,14 +141,14 @@ page 50073 "Repair & Maint. Job Card"
                 {
                     ApplicationArea = all;
                 }
-                field("Production Restart"; rec."Production Restart")
-                {
-                    ApplicationArea = all;
-                }
-                field("Est. Production Loss (MT)"; rec."Est. Production Loss (MT)")
-                {
-                    ApplicationArea = all;
-                }
+                // field("Production Restart"; rec."Production Restart")
+                // {
+                //     ApplicationArea = all;
+                // }
+                // field("Est. Production Loss (MT)"; rec."Est. Production Loss (MT)")
+                // {
+                //     ApplicationArea = all;
+                // }
                 field("Vendor No."; rec."Vendor No.")
                 {
                     ApplicationArea = all;
@@ -241,7 +240,7 @@ page 50073 "Repair & Maint. Job Card"
                             UNTIL ComponentList.NEXT = 0;
                         END;
                     END;
-                end;
+                END;
             }
             action("Close Job Card")
             {
@@ -259,9 +258,9 @@ page 50073 "Repair & Maint. Job Card"
                     rec.TESTFIELD("What Was Done");
                     rec.TESTFIELD("Fault Found or Not");
                     IF rec."Is it a Production Loss" = rec."Is it a Production Loss"::Yes THEN
-                        rec.TESTFIELD("Est. Production Loss (MT)");
+                        //rec.TESTFIELD("Est. Production Loss (MT)");
                     IF USERID <> rec."Created By" THEN
-                        ERROR('Job card can be closed by only the person who created it');
+                            ERROR('Job card can be closed by only the person who created it');
 
                     //post-validation
                     CLEAR(vUQty);
@@ -288,9 +287,9 @@ page 50073 "Repair & Maint. Job Card"
                     END;
                 end;
             }
-            action(Post)
+            action("Create Item Journal")
             {
-                Enabled = false;
+                Enabled = true;
                 Image = Post;
                 ApplicationArea = all;
 
@@ -303,44 +302,46 @@ page 50073 "Repair & Maint. Job Card"
                     IF MaintenanceLine.FINDFIRST THEN
                         REPEAT
                             //IF MaintenanceLine."Inventory  Qty"<=0 THEN //Previous
-                            IF MaintenanceLine."Inventory  Qty" > MaintenanceLine.Quantity THEN //PCPL0017 New
+                            MaintenanceLine.CalcFields(MaintenanceLine."Inventory  Qty");
+                            IF MaintenanceLine."Inventory  Qty" < MaintenanceLine.Quantity THEN //PCPL0017 New
                                 ERROR('Inventory  Quantity is 0 for Item %1', MaintenanceLine."Consumable Component");
                         UNTIL MaintenanceLine.NEXT = 0;
 
-                    CLEAR(vLine);
+
                     MaintenanceLine.RESET;
                     MaintenanceLine.SETRANGE("Document No.", rec."No.");
                     MaintenanceLine.SETRANGE("Component Type", MaintenanceLine."Component Type"::Item);
                     IF MaintenanceLine.FINDFIRST THEN
-                        REPEAT
-                            IF vLine = 0 THEN
-                                vLine := 10000;
-                            ItemJournalLine.RESET;
-                            ItemJournalLine.INIT;
-                            ItemJournalLine."Journal Batch Name" := 'PREV MAINT';
-                            ItemJournalLine."Journal Template Name" := 'ITEM';
-                            ItemJnlTemplate.GET('ITEM');
-                            ItemJnlBatch.GET('ITEM', 'PREV MAINT');
-                            ItemJournalLine."Entry Type" := ItemJournalLine."Entry Type"::"Negative Adjmt.";
-                            ItemJournalLine."Document Date" := WORKDATE;
-                            IF ItemJnlBatch."No. Series" <> '' THEN BEGIN
-                                CLEAR(NoSeriesMgt);
-                                ItemJournalLine."Document No." := NoSeriesMgt.GetNextNo(ItemJnlBatch."No. Series", TODAY, FALSE);
-                            END;
-                            ItemJournalLine."Line No." := vLine;
-                            ItemJournalLine."Posting Date" := TODAY;
-                            ItemJournalLine."Item No." := MaintenanceLine."Consumable Component";
-                            ItemJournalLine.VALIDATE(ItemJournalLine.Quantity, MaintenanceLine.Quantity);
-                            ItemJournalLine."Location Code" := MaintenanceLine."Location Code";
-                            ItemJournalLine."Bin Code" := MaintenanceLine."Bin Code";
-                            recItem.GET(MaintenanceLine."Consumable Component");
-                            ItemJournalLine.Description := recItem.Description;
-                            ItemJournalLine."Unit of Measure Code" := recItem."Base Unit of Measure";
-                            ItemJournalLine."Gen. Prod. Posting Group" := recItem."Gen. Prod. Posting Group";
-                            ItemJournalLine."Job Card Ref." := rec."No.";
-                            ItemJournalLine.INSERT;
-                            vLine += 10000;
-                        UNTIL MaintenanceLine.NEXT = 0;
+                        CLEAR(vLine);
+                    REPEAT
+                        IF vLine = 0 THEN
+                            vLine := 10000;
+                        ItemJournalLine.RESET;
+                        ItemJournalLine.INIT;
+                        ItemJournalLine."Journal Batch Name" := 'PREV MAINT';
+                        ItemJournalLine."Journal Template Name" := 'ITEM';
+                        ItemJnlTemplate.GET('ITEM');
+                        ItemJnlBatch.GET('ITEM', 'PREV MAINT');
+                        ItemJournalLine."Entry Type" := ItemJournalLine."Entry Type"::"Negative Adjmt.";
+                        ItemJournalLine."Document Date" := WORKDATE;
+                        IF ItemJnlBatch."No. Series" <> '' THEN BEGIN
+                            CLEAR(NoSeriesMgt);
+                            ItemJournalLine."Document No." := NoSeriesMgt.GetNextNo(ItemJnlBatch."No. Series", TODAY, FALSE);
+                        END;
+                        ItemJournalLine."Line No." := vLine;
+                        ItemJournalLine."Posting Date" := TODAY;
+                        ItemJournalLine."Item No." := MaintenanceLine."Consumable Component";
+                        ItemJournalLine.VALIDATE(ItemJournalLine.Quantity, MaintenanceLine.Quantity);
+                        ItemJournalLine."Location Code" := MaintenanceLine."Location Code";
+                        ItemJournalLine."Bin Code" := MaintenanceLine."Bin Code";
+                        recItem.GET(MaintenanceLine."Consumable Component");
+                        ItemJournalLine.Description := recItem.Description;
+                        ItemJournalLine."Unit of Measure Code" := recItem."Base Unit of Measure";
+                        ItemJournalLine."Gen. Prod. Posting Group" := recItem."Gen. Prod. Posting Group";
+                        ItemJournalLine."Job Card Ref." := rec."No.";
+                        ItemJournalLine.INSERT;
+                        vLine += 10000;
+                    UNTIL MaintenanceLine.NEXT = 0;
                     //CODEUNIT.RUN(CODEUNIT::"Item Jnl.-Post",ItemJournalLine);
                     MESSAGE('Item Journal Line has been created');
                 end;
@@ -402,83 +403,89 @@ page 50073 "Repair & Maint. Job Card"
 
                 end;
             }
-            //PCPL/NSW/07  Table Missing
-            // action("Create Requsition")
-            // {
-            //     Image = "Action";
+            // PCPL/NSW/07  Table Missing
+            action("Create Requsition")
+            {
+                Image = "Action";
+                ApplicationArea = all;
+                Caption = 'Create Requsition';
 
-            //     trigger OnAction()
-            //     begin
-            //         rec.TESTFIELD("Location Code");//PCPL0017
-            //         MaintenanceLine.RESET;
-            //         MaintenanceLine.SETRANGE(MaintenanceLine."Document No.", rec."No.");
-            //         MaintenanceLine.SETRANGE(MaintenanceLine."Component Type", MaintenanceLine."Component Type"::Item);
-            //         IF MaintenanceLine.FINDFIRST THEN
-            //             REPEAT
-            //                 MaintenanceLine.CALCFIELDS(MaintenanceLine."Inventory  Qty");
-            //                 IF MaintenanceLine.Quantity <= MaintenanceLine."Inventory  Qty" THEN
-            //                     ERROR('Inventory is already available. Please create Requisition only if it is needed');//PCPL0017
-            //             UNTIL MaintenanceLine.NEXT = 0;
-            //         CLEAR(ReqCreated);
-            //         MaintenanceLine.RESET;
-            //         MaintenanceLine.SETRANGE(MaintenanceLine."Document No.", rec."No.");
-            //         MaintenanceLine.SETRANGE(MaintenanceLine."Component Type", MaintenanceLine."Component Type"::Item);
-            //         MaintenanceLine.SETRANGE(MaintenanceLine."Req no.", '');
-            //         IF NOT MaintenanceLine.FINDFIRST THEN
-            //             ERROR('No Item lines in Job Card or Requisition already created')
-            //         ELSE BEGIN
-            //             RequisitionHeader.INIT;
-            //             PurchSetup.GET;
-            //             //RequisitionHeader."Requisition No":=NoSeriesMgt.GetNextNo(PurchSetup."Requisition No Series",TODAY,FALSE);
-            //             NoSeriesMgt.InitSeries(PurchSetup."Requisition No Series", PurchSetup."Requisition No Series", TODAY, RequisitionHeader."Requisition No", PurchSetup."Requisition No Series");
-            //             RequisitionHeader.VALIDATE(RequisitionHeader."Required Date", TODAY);//PCPL0017
-            //             RequisitionHeader.VALIDATE(RequisitionHeader."Posting Date", TODAY);
-            //             RequisitionHeader.VALIDATE(RequisitionHeader.Status, RequisitionHeader.Status::Open);
-            //             RequisitionHeader.VALIDATE(RequisitionHeader."Job Reference", rec."No.");//PCPL0017
-            //             RequisitionHeader.VALIDATE(RequisitionHeader."Location Code", rec."Location Code");//PCPL0017
-            //             RequisitionHeader.VALIDATE(RequisitionHeader."Final Version", TRUE);
-            //             COMMIT;
-            //             RequisitionHeader.INSERT;
-            //             COMMIT;
-            //             ReqCreated := TRUE;
-            //             CLEAR(vLine);
-            //             MaintenanceLine.RESET;
-            //             MaintenanceLine.SETRANGE(MaintenanceLine."Document No.", rec."No.");
-            //             MaintenanceLine.SETRANGE(MaintenanceLine."Component Type", MaintenanceLine."Component Type"::Item);
-            //             MaintenanceLine.SETFILTER(MaintenanceLine."Req no.", '');
-            //             IF MaintenanceLine.FINDFIRST THEN
-            //                 REPEAT
-            //                     IF ReqCreated THEN BEGIN
-            //                         RequisitionLine.RESET;
-            //                         RequisitionLine.SETRANGE(RequisitionLine."Requisition No", RequisitionHeader."Requisition No");
-            //                         IF RequisitionLine.FINDLAST THEN
-            //                             vLine := RequisitionLine."Line No" + 10000
-            //                         ELSE
-            //                             vLine := 10000;
-            //                         RequisitionLine.INIT;
-            //                         RequisitionLine."Requisition No" := RequisitionHeader."Requisition No";
-            //                         RequisitionLine."Line No" := vLine;
-            //                         RequisitionLine.VALIDATE(RequisitionLine.Type, RequisitionLine.Type::Item);
-            //                         RequisitionLine.VALIDATE(RequisitionLine."No.", MaintenanceLine."Consumable Component");
-            //                         RequisitionLine.VALIDATE(RequisitionLine.Quantity, MaintenanceLine.Quantity);
-            //                         RequisitionLine.VALIDATE(RequisitionLine."Job Reference No.", rec."No.");
-            //                         RequisitionLine.VALIDATE(RequisitionLine."Location Code", rec."Location Code");//PCPL0017
-            //                                                                                                        //RequisitionLine.VALIDATE("Bin Code","Bin Code");//PCPL0017
-            //                         RequisitionLine.INSERT;
-            //                         //vLine+=10000;
-            //                         MaintenanceLine."Req no." := RequisitionLine."Requisition No";
-            //                         MaintenanceLine."Req Line no." := RequisitionLine."Line No";
-            //                         MaintenanceLine.MODIFY;
-            //                     END;
-            //                 UNTIL MaintenanceLine.NEXT = 0;
-            //         END;
-            //         MESSAGE('Requisition is Created'); //PCPL0017
-            //     end;
-            // }
+                trigger OnAction()
+                begin
+                    rec.TESTFIELD("Location Code");//PCPL0017
+                    MaintenanceLine.RESET;
+                    MaintenanceLine.SETRANGE(MaintenanceLine."Document No.", rec."No.");
+                    MaintenanceLine.SETRANGE(MaintenanceLine."Component Type", MaintenanceLine."Component Type"::Item);
+                    IF MaintenanceLine.FINDFIRST THEN
+                        REPEAT
+                            MaintenanceLine.CALCFIELDS(MaintenanceLine."Inventory  Qty");
+                            IF MaintenanceLine.Quantity <= MaintenanceLine."Inventory  Qty" THEN
+                                ERROR('Inventory is already available. Please create Requisition only if it is needed');//PCPL0017
+                        UNTIL MaintenanceLine.NEXT = 0;
+                    CLEAR(ReqCreated);
+                    MaintenanceLine.RESET;
+                    MaintenanceLine.SETRANGE(MaintenanceLine."Document No.", rec."No.");
+                    MaintenanceLine.SETRANGE(MaintenanceLine."Component Type", MaintenanceLine."Component Type"::Item);
+                    MaintenanceLine.SETRANGE(MaintenanceLine."Req no.", '');
+                    IF NOT MaintenanceLine.FINDFIRST THEN
+                        ERROR('No Item lines in Job Card or Requisition already created')
+                    ELSE BEGIN
+                        RequisitionHeader.INIT;
+                        PurchSetup.GET;
+                        //PurchSetup.in
+                        RequisitionHeader."No." := NoSeriesMgt.GetNextNo('M/IND', TODAY, true);
+                        RequisitionHeader.VALIDATE(RequisitionHeader.Date, TODAY);//PCPL0017
+                        RequisitionHeader.VALIDATE(RequisitionHeader."Job Maintenance No.", Rec."No.");
+                        RequisitionHeader.VALIDATE(RequisitionHeader.Status, RequisitionHeader.Status::Open);
+                        RequisitionHeader.VALIDATE(RequisitionHeader."Type of Indent", RequisitionHeader."Type of Indent"::Routine);//PCPL0017
+                        RequisitionHeader.VALIDATE(RequisitionHeader."Location Code", rec."Location Code");//PCPL0017
+                        RequisitionHeader."Entry Type" := RequisitionHeader."Entry Type"::Indent;
+                        RequisitionHeader."Created By" := UserId;
+                        RequisitionHeader."Creation Date" := today;
+                        COMMIT;
+                        RequisitionHeader.INSERT;
+                        COMMIT;
+                        ReqCreated := TRUE;
+                        CLEAR(vLine);
+                        MaintenanceLine.RESET;
+                        MaintenanceLine.SETRANGE(MaintenanceLine."Document No.", rec."No.");
+                        MaintenanceLine.SETRANGE(MaintenanceLine."Component Type", MaintenanceLine."Component Type"::Item);
+                        MaintenanceLine.SETFILTER(MaintenanceLine."Req no.", '');
+                        IF MaintenanceLine.FINDFIRST THEN
+                            REPEAT
+                                IF ReqCreated THEN BEGIN
+                                    RequisitionLine.RESET;
+                                    RequisitionLine.SETRANGE(RequisitionLine."Document No.", RequisitionHeader."No.");
+                                    IF RequisitionLine.FINDLAST THEN
+                                        vLine := RequisitionLine."Line No." + 10000
+                                    ELSE
+                                        vLine := 10000;
+
+                                    RequisitionLine.INIT;
+                                    RequisitionLine."Entry Type" := RequisitionLine."Entry Type"::Indent;
+                                    RequisitionLine."Document No." := RequisitionHeader."No.";
+                                    RequisitionLine."Line No." := vLine;
+                                    RequisitionLine.VALIDATE(RequisitionLine.Type, RequisitionLine.Type::Item);
+                                    RequisitionLine.VALIDATE(RequisitionLine."No.", MaintenanceLine."Consumable Component");
+                                    RequisitionLine.VALIDATE(RequisitionLine.Quantity, MaintenanceLine.Quantity);
+                                    RequisitionLine.VALIDATE(RequisitionLine."Job Maintenance No.", rec."No.");
+                                    RequisitionLine.VALIDATE(RequisitionLine."Location Code", rec."Location Code");//PCPL001
+                                    RequisitionLine.INSERT;
+                                    //vLine+=10000;
+                                    MaintenanceLine."Req no." := RequisitionLine."Document No.";
+                                    MaintenanceLine."Req Line no." := RequisitionLine."Line No.";
+                                    MaintenanceLine.MODIFY;
+                                END;
+                            UNTIL MaintenanceLine.NEXT = 0;
+                    END;
+                    MESSAGE('Requisition is Created'); //PCPL0017
+                end;
+            }
             action("Get Components")
             {
                 Image = GetEntries;
                 ApplicationArea = all;
+                Visible = false;
 
                 trigger OnAction()
                 begin
@@ -522,8 +529,8 @@ page 50073 "Repair & Maint. Job Card"
             }
             group(IncomingDocument)
             {
-                Caption = 'Incoming Document';
-                Image = Documents;
+                //      Caption = 'Incoming Document';
+                //    Image = Documents;
                 // action(IncomingDocCard)
                 // {
                 //     Caption = 'View Incoming Document';
@@ -539,53 +546,53 @@ page 50073 "Repair & Maint. Job Card"
                 //         //IncomingDocument.ShowCardFromEntryNo("Incoming Document Entry No.");
                 //     end;
                 // }
-                action(SelectIncomingDoc)
-                {
-                    AccessByPermission = TableData 130 = R;
-                    Caption = 'Select Incoming Document';
-                    Image = SelectLineToApply;
-                    ApplicationArea = all;
-                    //The property 'ToolTip' cannot be empty.
-                    //ToolTip = '';
+                // action(SelectIncomingDoc)
+                // {
+                //     AccessByPermission = TableData 130 = R;
+                //     Caption = 'Select Incoming Document';
+                //     Image = SelectLineToApply;
+                //     ApplicationArea = all;
+                //     //The property 'ToolTip' cannot be empty.
+                //     //ToolTip = '';
 
-                    trigger OnAction()
-                    var
-                        IncomingDocument: Record 130;
-                    begin
-                        rec.VALIDATE("Incoming Document Entry No.", IncomingDocument.SelectIncomingDocument(rec."Incoming Document Entry No.", rec.RecordID));
-                    end;
-                }
-                action(IncomingDocAttachFile)
-                {
-                    Caption = 'Create Incoming Document from File';
-                    Ellipsis = true;
-                    Image = Attach;
-                    ApplicationArea = all;
-                    //The property 'ToolTip' cannot be empty.
-                    //ToolTip = '';
+                //     trigger OnAction()
+                //     var
+                //         IncomingDocument: Record 130;
+                //     begin
+                //         rec.VALIDATE("Incoming Document Entry No.", IncomingDocument.SelectIncomingDocument(rec."Incoming Document Entry No.", rec.RecordID));
+                //     end;
+                // }
+                // action(IncomingDocAttachFile)
+                // {
+                //     Caption = 'Create Incoming Document from File';
+                //     Ellipsis = true;
+                //     Image = Attach;
+                //     ApplicationArea = all;
+                //     //The property 'ToolTip' cannot be empty.
+                //     //ToolTip = '';
 
-                    trigger OnAction()
-                    var
-                        IncomingDocumentAttachment: Record 133;
-                    begin
-                        //IncomingDocumentAttachment.NewAttachmentFromMHDocument(Rec);
-                    end;
-                }
-                action(RemoveIncomingDoc)
-                {
-                    Caption = 'Remove Incoming Document';
-                    Enabled = HasIncomingDocument;
-                    Image = RemoveLine;
-                    ApplicationArea = all;
-                    //The property 'ToolTip' cannot be empty.
-                    //ToolTip = '';
-                    Visible = false;
+                //     trigger OnAction()
+                //     var
+                //         IncomingDocumentAttachment: Record 133;
+                //     begin
+                //         //IncomingDocumentAttachment.NewAttachmentFromMHDocument(Rec);
+                //     end;
+                // }
+                // action(RemoveIncomingDoc)
+                // {
+                //     Caption = 'Remove Incoming Document';
+                //     Enabled = HasIncomingDocument;
+                //     Image = RemoveLine;
+                //     ApplicationArea = all;
+                //     //The property 'ToolTip' cannot be empty.
+                //     //ToolTip = '';
+                //     Visible = false;
 
-                    trigger OnAction()
-                    begin
-                        rec."Incoming Document Entry No." := 0;
-                    end;
-                }
+                //     trigger OnAction()
+                //     begin
+                //         rec."Incoming Document Entry No." := 0;
+                //     end;
+                // }
             }
         }
     }
@@ -620,7 +627,7 @@ page 50073 "Repair & Maint. Job Card"
         vLine: Integer;
         recFA: Record 5600;
         vDocNo: Code[20];
-        ComponentList: Record 50031;
+        ComponentList: Record 50036;
         recML: Record 50033;
         recILE: Record 32;
         recItem: Record 27;
@@ -631,8 +638,8 @@ page 50073 "Repair & Maint. Job Card"
         PurchaseLine: Record 39;
         PurchSetup: Record 312;
         HasIncomingDocument: Boolean;
-        //RequisitionHeader: Record 50008; //PCPL/NSW/07
-        //RequisitionLine: Record 50009; //PCPL/NSW/07
+        RequisitionHeader: Record 50022; //PCPL/NSW/07
+        RequisitionLine: Record 50023; //PCPL/NSW/07
         ReqCreated: Boolean;
         vUQty: Decimal;
 }

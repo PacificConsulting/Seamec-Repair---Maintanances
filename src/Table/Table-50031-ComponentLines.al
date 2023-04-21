@@ -1,4 +1,4 @@
-table 50031 "Component Lines"
+table 50036 "Component Lines"
 {
     DrillDownPageID = 50071;
     LookupPageID = 50071;

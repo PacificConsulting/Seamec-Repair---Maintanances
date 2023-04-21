@@ -30,7 +30,7 @@ table 50033 "Maintenance Line"
             DataClassification = ToBeClassified;
             TableRelation = IF ("Component Type" = CONST(FA)) "Fixed Asset"
             ELSE
-            IF ("Component Type" = CONST(Item)) Item WHERE("Item Category Code" = FILTER('CN' | 'PM'))
+            IF ("Component Type" = CONST(Item)) Item// WHERE("Item Category Code" = FILTER('CN' | 'PM'))
             ELSE
             IF ("Component Type" = CONST("G/L Account")) "G/L Account" WHERE("Direct Posting" = CONST(true),
                                                                                              "Account Type" = CONST(Posting),

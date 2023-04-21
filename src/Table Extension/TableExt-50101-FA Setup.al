@@ -5,9 +5,9 @@ tableextension 50101 "FA Setup" extends "FA Setup"
         field(50050; "Maintenance Nos."; Code[10])
         {
             DataClassification = ToBeClassified;
+            TableRelation = "No. Series";
         }
     }
 
-    var
-    //myInt: Integer;
+
 }

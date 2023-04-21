@@ -7,6 +7,7 @@ table 50032 "Maintenance Header"
         field(1; "No."; Code[20])
         {
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(2; "FA No."; Code[20])
         {

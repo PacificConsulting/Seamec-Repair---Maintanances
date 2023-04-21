@@ -1,7 +1,7 @@
 page 50081 "Job Components"
 {
     PageType = List;
-    SourceTable = 50031;
+    SourceTable = 50036;
     ApplicationArea = all;
     UsageCategory = lists;
 

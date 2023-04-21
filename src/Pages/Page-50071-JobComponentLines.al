@@ -1,7 +1,7 @@
 page 50071 "Job Component Lines"
 {
     PageType = ListPart;
-    SourceTable = 50031;
+    SourceTable = 50036;
 
 
 

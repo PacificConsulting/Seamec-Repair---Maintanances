@@ -86,10 +86,11 @@ page 50076 "Maintenance Work Order"
 
                     end;
                 }
-                action("Create Work Order")
+                action("Create Purchase Order")
                 {
-                    Caption = 'Create Work Order';
+                    Caption = 'Create Purchase Order';
                     Image = CreateDocument;
+                    ApplicationArea = all;
                     //Promoted = true;
                     //PromotedCategory = Process;
 
@@ -111,8 +112,8 @@ page 50076 "Maintenance Work Order"
                             IF MaintenanceHeader.FINDFIRST THEN //
                                 PurchaseHeader.INIT;
                             PurchSetup.GET;
-                            //PurchaseHeader."No.":=NoSeriesMgt.GetNextNo(PurchSetup."Order Nos.",TODAY,FALSE);
-                            NoSeriesMgt.InitSeries(PurchSetup."Work Order No.", PurchSetup."Work Order No.", TODAY, PurchaseHeader."No.", PurchSetup."Work Order No.");
+                            PurchaseHeader."No." := NoSeriesMgt.GetNextNo(PurchSetup."Order Nos.", TODAY, FALSE);
+                            //NoSeriesMgt.InitSeries(PurchSetup."Work Order No.", PurchSetup."Work Order No.", TODAY, PurchaseHeader."No.", PurchSetup."Work Order No.");
                             PurchaseHeader.VALIDATE(PurchaseHeader."Work Order", TRUE);
                             PurchaseHeader.VALIDATE(PurchaseHeader."Posting Date", TODAY);
                             PurchaseHeader.VALIDATE(PurchaseHeader."Document Type", PurchaseHeader."Document Type"::Order);

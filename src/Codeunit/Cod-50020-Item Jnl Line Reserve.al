@@ -14,7 +14,6 @@ codeunit 50020 "Item Jnl. Line Reserve"
 
     var
 
-
     procedure CallItemTrackingML(VAR MaintenanceLine: Record "Maintenance Line"; IsReclass: Boolean)
     var
 

@@ -36,10 +36,10 @@ page 50074 "Repair & Maint. Consumables"
                 {
                     ApplicationArea = all;
                 }
-                field("Bin Code"; rec."Bin Code")
-                {
-                    ApplicationArea = all;
-                }
+                // field("Bin Code"; rec."Bin Code")
+                // {
+                //     ApplicationArea = all;
+                // }
                 field("Inventory  Qty"; rec."Inventory  Qty")
                 {
                     ApplicationArea = all;
