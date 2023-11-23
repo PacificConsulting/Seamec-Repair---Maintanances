@@ -13,12 +13,14 @@ pageextension 50211 "Fixed Asset Card" extends 5600
             {
                 RunObject = Page "Job Component List";
                 RunPageLink = "FA No." = FIELD("No.");
+                ApplicationArea = All;
             }
 
             Action("Job List")
             {
                 RunObject = Page "Job Maintenance List";
                 RunPageLink = "FA No." = FIELD("No.");
+                ApplicationArea = All;
             }
         }
     }

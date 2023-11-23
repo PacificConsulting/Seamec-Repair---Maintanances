@@ -59,7 +59,7 @@ page 50077 "Maintenance FA SubPage"
                     Image = ItemTrackingLines;
                     ShortCutKey = 'Shift+Ctrl+I';
                     Visible = false;
-
+                    ApplicationArea = All;
                     trigger OnAction()
                     begin
                         rec.OpenItemTrackingLines(FALSE);

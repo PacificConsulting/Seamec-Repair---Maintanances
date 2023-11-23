@@ -55,6 +55,7 @@ page 50076 "Maintenance Work Order"
                 field("Work Order No."; rec."Work Order No.")
                 {
                     Editable = false;
+                    ApplicationArea = All;
                 }
             }
         }
@@ -79,7 +80,7 @@ page 50076 "Maintenance Work Order"
                     Image = ItemTrackingLines;
                     ShortCutKey = 'Shift+Ctrl+I';
                     Visible = false;
-
+                    ApplicationArea = All;
                     trigger OnAction()
                     begin
                         rec.OpenItemTrackingLines(FALSE);

@@ -96,6 +96,7 @@ page 50080 "Job Component Card"
                 SubPageLink = "FA No." = FIELD("FA No."),
                               Period = FIELD(Period),
                               "Maintenance Type" = FIELD("Maintenance Type");
+                ApplicationArea = All;
             }
         }
     }

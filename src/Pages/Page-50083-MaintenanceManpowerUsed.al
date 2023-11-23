@@ -65,7 +65,7 @@ page 50083 "Maintenance Manpower Used"
                     Image = ItemTrackingLines;
                     ShortCutKey = 'Shift+Ctrl+I';
                     Visible = false;
-
+                    ApplicationArea = All;
                     trigger OnAction()
                     begin
                         rec.OpenItemTrackingLines(FALSE);

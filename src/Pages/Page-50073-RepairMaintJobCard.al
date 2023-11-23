@@ -158,22 +158,27 @@ page 50073 "Repair & Maint. Job Card"
                 {
                     Enabled = false;
                     Visible = false;
+                    ApplicationArea = All;
                 }
                 field("Vendor Name"; rec."Vendor Name")
                 {
                     Visible = false;
+                    ApplicationArea = All;
                 }
                 field("Creation Date"; rec."Creation Date")
                 {
                     Visible = false;
+                    ApplicationArea = All;
                 }
                 field("Start Date"; rec."Start Date")
                 {
                     Visible = false;
+                    ApplicationArea = All;
                 }
                 field("End Date"; rec."End Date")
                 {
                     Visible = false;
+                    ApplicationArea = All;
                 }
             }
             part(MaintenanceSubPage; 50074)
@@ -342,7 +347,6 @@ page 50073 "Repair & Maint. Job Card"
                         ItemJournalLine.INSERT;
                         vLine += 10000;
                     UNTIL MaintenanceLine.NEXT = 0;
-                    //CODEUNIT.RUN(CODEUNIT::"Item Jnl.-Post",ItemJournalLine);
                     MESSAGE('Item Journal Line has been created');
                 end;
             }

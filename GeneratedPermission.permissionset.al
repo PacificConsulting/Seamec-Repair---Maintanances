@@ -1,0 +1,30 @@
+permissionset 50010 GeneratedPrmsnRepair
+{
+    Assignable = true;
+    Permissions = tabledata "Component Lines" = RIMD,
+        tabledata "Job Component Header" = RIMD,
+        tabledata "Maintenance Header" = RIMD,
+        tabledata "Maintenance Line" = RIMD,
+        tabledata "Preventive Maintenance Master" = RIMD,
+        table "Component Lines" = X,
+        table "Job Component Header" = X,
+        table "Maintenance Header" = X,
+        table "Maintenance Line" = X,
+        table "Preventive Maintenance Master" = X,
+        report "Auto Maintenance Schedule" = X,
+        codeunit "Item Jnl. Line Reserve" = X,
+        page "Closed Maintenance List" = X,
+        page "Job Component Card" = X,
+        page "Job Component Lines" = X,
+        page "Job Component List" = X,
+        page "Job Components" = X,
+        page "Job Maintenance List" = X,
+        page "Maintenance FA SubPage" = X,
+        page "Maintenance Manpower Used" = X,
+        page "Maintenance Work Order" = X,
+        page "Preventive Maintenance M List" = X,
+        page "Preventive Maintenance Master" = X,
+        page "Repair & Maint. Consumables" = X,
+        page "Repair & Maint. Job Card" = X,
+        page "Repair & Maint. Job List" = X;
+}
