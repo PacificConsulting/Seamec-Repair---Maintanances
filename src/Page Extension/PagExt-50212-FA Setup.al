@@ -13,7 +13,7 @@ pageextension 50212 "FA Setup Ext" extends "Fixed Asset Setup"
 
     actions
     {
-        // Add changes to page actions here
+        // //Add changes to page actions here
     }
 
     var
